@@ -270,14 +270,17 @@ class TDigest(object):
 
     @classmethod
     def from_dict(cls, d:dict):
-       t = TDigest()
-       for c in d['centroids']:
-           ci = Centroid(c['m'],c['c'])
-           t.C.insert(c['m'], ci)
-       t.K = d['K']
-       t.delta = d['delta']
-       t.n = d['n']
-       return t 
+        try:
+            t = TDigest()
+            for c in d['centroids']:
+                ci = Centroid(c['m'],c['c'])
+                t.C.insert(c['m'], ci)
+            t.K = d['K']
+            t.delta = d['delta']
+            t.n = d['n']
+        except KeyError:
+            t = TDigest()
+        return t
     
     def update_from_dict(self, dict_values):
         """
